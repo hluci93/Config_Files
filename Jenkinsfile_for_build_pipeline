@@ -22,8 +22,6 @@ pipeline {
     tools {
         // Will Use maven version 3.8.5 defined with the same name.
         maven "3.8.5"
-        //Git Default build
-        git "Default"
     }
     
     options{
@@ -37,7 +35,7 @@ stages {
             steps 
                 {
                 // Get code from GitHub repository
-                git branch:"${params.git_repo_branch}", credentialsId: 'c9d8cdef-1edb-4e31-9682-ed6d205f722b', url: "${params.git_repo}"
+                git branch: "${params.git_repo_branch}", credentialsId: 'c9d8cdef-1edb-4e31-9682-ed6d205f722b', url: "${params.git_repo}"
                 }
         } 
   stage("Build Package")
