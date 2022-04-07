@@ -1,7 +1,7 @@
 
 //START PIPELINE
 pipeline {
-
+agent none
 
   //Define needed parameters
   parameters{
