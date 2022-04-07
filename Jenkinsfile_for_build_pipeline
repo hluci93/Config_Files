@@ -1,17 +1,18 @@
-//Define needed parameters
+
+//START PIPELINE
+pipeline {
+
+  //Define needed parameters
 
 properties([
   parameters([
                     // Parameters used for Building Stage of Package
    string(defaultValue: 'https://github.com/hluci93/maven-web-application', description: 'GitHub Repository used for importing configuration.', name: 'git_repo'),
-   gitParameter(branch: '', branchFilter: '.*', defaultValue: 'origin/master', name: 'git_repo_branch', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'GitParameterDefinition')
+   string(defaultValue: 'master', description: 'Specify your Git branch', name: 'git_repo_branch'),
                             
   ])
 ])
 
-
-//START PIPELINE
-pipeline {
   agent {
     node{
       label 'mvn'
@@ -21,6 +22,7 @@ pipeline {
     tools {
         // Will Use maven version 3.8.5 defined with the same name.
         maven "3.8.5"
+        git "Latest version"
     }
     
     options{
@@ -29,7 +31,7 @@ pipeline {
     }
 
 stages {
-  stage("Get Git Code")
+  stage("Git-Checkout")
         {
             steps 
                 {
@@ -42,7 +44,7 @@ stages {
                  steps
                  {
                  echo 'Building package'
-                 sh 'mvn package'
+                 sh 'mvn clean package'
                  }
               }
       }//Stages Closing
