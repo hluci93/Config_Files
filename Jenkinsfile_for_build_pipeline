@@ -13,8 +13,8 @@ pipeline {
 
   parameters{
                     // Parameters used for Building Stage of Package
-   string(defaultValue: 'https://github.com/hluci93/maven-web-application', description: 'GitHub Repository used for importing configuration.', name: 'git_repo'),
-   string(defaultValue: 'master', description: 'Specify your Git branch', name: 'git_repo_branch'),
+   string(defaultValue: 'https://github.com/hluci93/maven-web-application', description: 'GitHub Repository used for importing configuration.', name: 'git_repo')
+   string(defaultValue: 'master', description: 'Specify your Git branch', name: 'git_repo_branch')
                            
   }
     
