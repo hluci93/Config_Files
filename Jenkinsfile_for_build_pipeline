@@ -39,7 +39,9 @@ stages {
               sh 'mvn clean package'
                  }
               }
+        }
       }//Stages Closing
 }//Pipeline closing
+
 
 
