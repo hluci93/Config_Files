@@ -24,11 +24,12 @@ pipeline {
 
 stages {
 
-  agent {
-        label 'mvn'
-        }
+
   stage("Git-Checkout")
         {
+        agent {
+        label 'mvn'
+        }
             steps 
                 {
                 // Get code from GitHub repository
@@ -36,7 +37,10 @@ stages {
                 }
         } 
   stage("Build Package")
-        {            
+        {  
+        agent {
+        label 'mvn'
+        }          
 
                  steps
                  {
