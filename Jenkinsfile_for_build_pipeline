@@ -2,10 +2,10 @@
 
 properties([
   parameters([
-                    // Parameters used for Building Stage of Package
-      string(defaultValue: 'https://github.com/hluci93/maven-web-application', description: 'GitHub Repository used for importing configuration.', name: 'git_repo'),
-      string(defaultValue: 'origin/master', description: 'Select branch to build from Git Repository', name: 'git_repo_branch'),
-                            
+         // Parameters used for Building Stage of Package
+   string(defaultValue: 'https://github.com/hluci93/maven-web-application', description: 'GitHub Repository used for importing configuration.', name: 'git_repo'),
+   gitParameter(branch: '', branchFilter: 'origin/(.*)', defaultValue: 'master', description: '', name: 'git_repo_branch', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'PT_BRANCH')
+                              
   ])
 ])
 
