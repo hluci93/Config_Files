@@ -1,11 +1,9 @@
 
 //START PIPELINE
 pipeline {
-  //Define needed parameters
-  agent {
-        label 'mvn'
-      }
 
+
+  //Define needed parameters
   parameters{
                     // Parameters used for Building Stage of Package
    string(defaultValue: 'https://github.com/hluci93/maven-web-application', description: 'GitHub Repository used for importing configuration.', name: 'git_repo')
@@ -25,6 +23,10 @@ pipeline {
     }
 
 stages {
+
+  agent {
+        label 'mvn'
+        }
   stage("Git-Checkout")
         {
             steps 
@@ -34,9 +36,11 @@ stages {
                 }
         } 
   stage("Build Package")
-        {
+        {            
+
                  steps
                  {
+
                  echo 'Building package'
                  sh 'mvn clean package'
                  }
