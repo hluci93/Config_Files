@@ -3,10 +3,8 @@
 pipeline {
   //Define needed parameters
   agent {
-    node{
-      label 'mvn'
-    }
-  }
+        label 'mvn'
+      }
 
   parameters{
                     // Parameters used for Building Stage of Package
