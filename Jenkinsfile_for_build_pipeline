@@ -1,10 +1,7 @@
 
 //START PIPELINE
 pipeline {
-
   //Define needed parameters
-
-
   agent {
     node{
       label 'mvn'
@@ -21,7 +18,7 @@ pipeline {
     tools {
         // Will Use maven version 3.8.5 defined with the same name.
         maven "3.8.5"
-        git "Latest version"
+        git "Latest_version"
     }
     
     options{
