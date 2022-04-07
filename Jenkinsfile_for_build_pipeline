@@ -13,8 +13,8 @@ properties([
 
 //START PIPELINE
 pipeline {
-    agent mvn
-
+  agent mvn
+    
     tools {
         // Will Use maven version 3.8.5 defined with the same name.
         maven "3.8.5"
@@ -26,7 +26,6 @@ pipeline {
     timestamps()
     buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '2', numToKeepStr: '5'))
     }
-
 
 stages {
   stage("Get Git Code")
@@ -45,7 +44,7 @@ stages {
                  sh 'mvn package'
                  }
               }
-      }
-}//Stages Closing
-
+      }//Stages Closing
 }//Pipeline closing
+
+
