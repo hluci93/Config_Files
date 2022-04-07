@@ -1,7 +1,7 @@
 
 //START PIPELINE
 pipeline {
-agent none
+agent {label 'mvn'}
 
   //Define needed parameters
   parameters{
@@ -16,16 +16,14 @@ agent none
     buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '2', numToKeepStr: '5'))
     }
 
+        tools {
+          git "Latest_version"
+          maven "3.8.5"
+        }
 stages {
 
   stage("Git-Checkout")
         {
-        agent {
-        label 'mvn'
-        }
-        tools {
-          git "Latest_version"
-        }
             steps 
                 {
                 // Get code from GitHub repository
@@ -34,18 +32,11 @@ stages {
         } 
   stage("Build Package")
         {  
-        agent {
-        label 'mvn'
-        }          
-        tools {
-          maven "3.8.5"
-        }
-
-                 steps
-                 {
-
-                 echo 'Building package'
-                 sh 'mvn clean package'
+         steps
+              {
+              echo 'Building package'
+              withMaven(maven : '3.8.5') {
+              sh 'mvn clean package'
                  }
               }
       }//Stages Closing
