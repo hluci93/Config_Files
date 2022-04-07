@@ -4,7 +4,7 @@ properties([
   parameters([
                     // Parameters used for Building Stage of Package
       string(defaultValue: 'https://github.com/hluci93/maven-web-application', description: 'GitHub Repository used for importing configuration.', name: 'git_repo'),
-      string(defaultValue: 'master', description: 'Select branch to build from Git Repository', name: 'git_repo_branch'),
+      string(defaultValue: 'origin/master', description: 'Select branch to build from Git Repository', name: 'git_repo_branch'),
                             
   ])
 ])
