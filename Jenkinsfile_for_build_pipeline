@@ -17,7 +17,6 @@ agent {label 'mvn'}
     }
 
         tools {
-          git "Latest_version"
           maven "3.8.5"
         }
 stages {
