@@ -10,13 +10,7 @@ agent none
    string(defaultValue: 'master', description: 'Specify your Git branch', name: 'git_repo_branch')
                            
   }
-    
-    tools {
-        // Will Use maven version 3.8.5 defined with the same name.
-        maven "3.8.5"
-        git "Latest_version"
-    }
-    
+      
     options{
     timestamps()
     buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '2', numToKeepStr: '5'))
@@ -24,11 +18,13 @@ agent none
 
 stages {
 
-
   stage("Git-Checkout")
         {
         agent {
         label 'mvn'
+        }
+        tools {
+          git "Latest_version"
         }
             steps 
                 {
@@ -41,6 +37,9 @@ stages {
         agent {
         label 'mvn'
         }          
+        tools {
+          maven "3.8.5"
+        }
 
                  steps
                  {
