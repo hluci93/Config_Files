@@ -13,7 +13,11 @@ properties([
 
 //START PIPELINE
 pipeline {
-  agent mvn
+  agent {
+    node{
+      label 'mvn'
+    }
+  }
     
     tools {
         // Will Use maven version 3.8.5 defined with the same name.
