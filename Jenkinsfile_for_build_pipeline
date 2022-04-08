@@ -16,7 +16,7 @@ agent {label 'mvn'}
     buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '2', numToKeepStr: '5'))
     }
 
-        tools {
+tools {
           maven "3.8.5"
         }
 stages {
@@ -34,6 +34,7 @@ stages {
          steps
               {
               echo 'Building package'
+              sh 'mvn --version'
               sh 'mvn clean package'
              }
         }
