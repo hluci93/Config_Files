@@ -29,25 +29,21 @@ stages {
                 git branch: "${params.git_repo_branch}", credentialsId: 'c9d8cdef-1edb-4e31-9682-ed6d205f722b', url: "${params.git_repo}"
                 }
         } 
-  stage("Build Package")
-        {  
-         steps
-              {
-              echo 'Building package'
-              sh 'mvn --version'
-              sh 'mvn clean package'
-             }
-        }
-  stage ('SonarQube Analysis')
-        {
-         steps  
-              {
-                  withSonarQubeEnv('SonarqubeServer') 
-                  sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
-                  
-                }   
+stage("Build & SonarQube analysis") {
+            
+            steps {
+              withSonarQubeEnv('SonarqubeServer') {
+                sh 'mvn clean package sonar:sonar'
               }
-        
+            }
+          }
+stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+        }
   
       }//Stages Closing
 }//Pipeline closing
