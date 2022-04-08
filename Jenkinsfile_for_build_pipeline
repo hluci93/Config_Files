@@ -8,6 +8,7 @@ agent {label 'mvn'}
                     // Parameters used for Building Stage of Package
    string(defaultValue: 'https://github.com/hluci93/maven-web-application', description: 'GitHub Repository used for importing configuration.', name: 'git_repo')
    string(defaultValue: 'master', description: 'Specify your Git branch', name: 'git_repo_branch')
+   string(defaultValue: './target/maven-web-application', description: 'WAR file used for deploying.', name: 'war_file')
                            
   }
       
@@ -39,11 +40,19 @@ stage("Build & SonarQube analysis") {
           }
 stage("Quality Gate") {
             steps {
-              timeout(time: 1, unit: 'HOURS') {
+              timeout(time: 5, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
               }
             }
         }
+        
+ stage ('Artifactory Deploy'){
+          steps
+                { //Deploy to Artifactory
+                echo 'Deploy package to Artifactory'
+                sh """mvn deploy:deploy-file -Dfile=${params.war_file}.war -Durl="http://192.168.72.199:8082/artifactory/maven_repo" -DrepositoryId="central" -DuniqueVersion=true"""
+                }
+          }
   
       }//Stages Closing
 }//Pipeline closing
