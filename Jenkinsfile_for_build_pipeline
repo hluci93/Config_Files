@@ -16,9 +16,6 @@ agent {label 'mvn'}
     buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '2', numToKeepStr: '5'))
     }
 
-tools {
-          maven "3.8.5"
-        }
 stages {
 
   stage("Git-Checkout")
