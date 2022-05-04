@@ -1,7 +1,4 @@
 
-
-
-
 //START PIPELINE
 pipeline {
 
@@ -26,6 +23,15 @@ pipeline {
 
 
 stages {
+
+  stage("Git-Checkout")
+        {
+            steps 
+                {
+                // Get Dockerfile from GitHub repository
+                git credentialsId: 'c9d8cdef-1edb-4e31-9682-ed6d205f722b', url: "https://github.com/hluci93/Config_Files"
+                }
+        
   stage("Pull Artifact")
         {
             steps 
@@ -42,33 +48,46 @@ stages {
                 //Build Image and Push Image to Registry  
                 script
                   {                 
+                    //Login to Registry
+                    withCredentials([usernamePassword(credentialsId: 'Artifactory_Hub', passwordVariable: 'art_passwd', usernameVariable: 'art_user')]) 
+                                            {
+                                             sh "docker login -u ${env.art_user} -p ${env.art_passwd} ${params.docker_registry}"
+                                            } 
+                    //Build and Push Image                        
                         sh "docker login ${params.docker_registry}"
                         sh "docker build -t ${params.imageName}:${BUILD_NUMBER} ."
                         sh "docker tag ${params.imageName}:${BUILD_NUMBER} ${params.docker_registry}/${params.imageName}:${BUILD_NUMBER}"
                         sh "docker push ${params.docker_registry}/${params.imageName}:${BUILD_NUMBER}"                      
                   }
-                //Deploy container
+
+                
+                //Check and deploy container
+                script
+                  {
+                      def nr_cont = sh """docker ps -a --filter "label=type=${params.filter}" | wc -l"""
+                      def old_container= sh "docker ps -a | grep old | wc -l"
+                      if ( nr_cont != 1){
+                        if ( old_container !=0)
+                        {
+                          sh "docker rm  ${params.containerName}_old"  
+                        }
+                        sh "docker stop ${params.containerName}"
+                        sh "docker rename  ${params.containerName} ${params.containerName}_old"
+                  }
                 sh """docker run -d -p ${params.EXPOSED_PORT}:8080 --name ${params.containerName} ${params.imageName}:${BUILD_NUMBER}"""               
                   
                 }
         }
-//  stage("Cleanup")
- //        { 
-  //          steps
-    //            { //CLEANUP
-      //          echo 'Clean system of old images and containers'
-        //        script
-          //      {
-            //      def nr_cont = sh """docker ps -a --filter "label=type=${params.filter}" | wc -l"""
-              //    if ( nr_cont != 1){
-                //      echo "test"
-              //        sh """docker rm \$(docker stop \$(docker ps -a --filter "label=type=${params.filter}" --format="{{.ID}}"))"""
-             //         }
-             //    sh """docker image prune -f --filter label=type=${params.filter}"""
-             //   }            
-             //   
-             //   }
-        //  }  
+stage("Cleanup")
+        { 
+          steps
+            { //CLEANUP
+                 echo 'Clean system of old images'
+                 sh """docker image prune -f --filter label=type=${params.filter}"""
+                }            
+                
+        }
+ 
 }//Stages Closing
 
 }//Pipeline closing
