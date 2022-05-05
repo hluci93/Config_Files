@@ -46,13 +46,13 @@ stage("Quality Gate") {
             }
         }
         
-// stage ('Artifactory Deploy'){
-  //        steps
-    //            { //Deploy to Artifactory
-      //          echo 'Deploy package to Artifactory'
-        //        sh """mvn deploy:deploy-file -Dfile=${params.war_file}.war -Durl="http://192.168.72.199:8082/artifactory/maven_repo" -DrepositoryId="central" -DuniqueVersion=true -DgroupId="maven_webapp_first" -DartifactId="maven-web-application" -Dversion="latest" """
-          //      }
-         // }
+ stage ('Artifactory Deploy'){
+         steps
+                { //Deploy to Artifactory
+                echo 'Deploy package to Artifactory'
+                sh """mvn deploy:deploy-file -Dfile=${params.war_file}.war -Durl="http://192.168.72.199:8082/artifactory/maven_repo" -DrepositoryId="central" -DuniqueVersion=true -DgroupId="maven_webapp_first" -DartifactId="maven-web-application" -Dversion="latest" """
+                }
+          }
   
       }//Stages Closing
 }//Pipeline closing
