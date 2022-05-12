@@ -4,6 +4,9 @@ pipeline {
 
   agent {label 'container'}
 
+    environment {
+        ARTIFACTORY_CRED = credentials('Artifactory_Hub')
+    }
 //Define needed parameters
   parameters{
      // USED FOR DEPLOYMENT TO CONTAINER STAGE  
@@ -60,14 +63,15 @@ stages {
                 script
                   {                 
                     //Login to Registry
-                    withCredentials([usernamePassword(credentialsId: 'Artifactory_Hub', passwordVariable: 'art_passwd', usernameVariable: 'art_user')]) 
-                                            {
-                                             sh "docker login -u ${env.art_user} -p ${env.art_passwd} ${params.docker_registry}"
-                                            } 
-                    //Build and Push Image                        
+                   // withCredentials([usernamePassword(credentialsId: 'Artifactory_Hub', passwordVariable: 'art_passwd', usernameVariable: 'art_user')]) 
+                   //                         {
+                    //                         sh "docker login -u ${env.art_user} -p ${env.art_passwd} ${params.docker_registry}"
+                    //                        } 
+                    //Build and Push Image
+
+                        sh "echo \"${ARTIFACTORY_CRED_PSW}\" | docker login -u \"${ARTIFACTORY_CRED_USR}\" docker-virtual.artifactory --password-stdin"                        
                         sh "docker login ${params.docker_registry}"
-                        sh "docker build -t ${params.imageName}:${BUILD_NUMBER} ."
-                        sh "docker tag ${params.imageName}:${BUILD_NUMBER} ${params.docker_registry}/${params.imageName}:${BUILD_NUMBER}"
+                        sh "docker build -t ${params.docker_registry}/${params.imageName}:${BUILD_NUMBER} ."
                         sh "docker push ${params.docker_registry}/${params.imageName}:${BUILD_NUMBER}"                      
                   }
 
