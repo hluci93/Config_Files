@@ -28,8 +28,8 @@ stages {
         {
             steps 
                 {
-                // Get Dockerfile from GitHub repository
-                git credentialsId: 'c9d8cdef-1edb-4e31-9682-ed6d205f722b', url: "https://github.com/hluci93/Config_Files"
+                // Get only Dockerfile from GitHub repository
+                git branch: main, credentialsId: 'c9d8cdef-1edb-4e31-9682-ed6d205f722b', url: "https://github.com/hluci93/Config_Files"
                 }
         }
   stage("Pull Artifact")
