@@ -88,8 +88,10 @@ stages {
                         sh "docker stop ${params.containerName}"
                         sh "docker rename  ${params.containerName} ${params.containerName}_old"
                   }
+                  else
+                  {
                 sh """docker run -d -p ${params.EXPOSED_PORT}:8080 --name ${params.containerName} ${params.imageName}:${BUILD_NUMBER}"""               
-                  
+                  }
                 }
         }
         }
