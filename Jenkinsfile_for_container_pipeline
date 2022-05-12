@@ -82,7 +82,7 @@ stages {
                       def old_container= sh (script: "docker ps -a | grep old | wc -l", returnStdout: true)
                      // Integer nr_cont_int = nr_cont as Integer
                       //Integer old_container_int = old_container as Integer
-                      sh "echo ${nr_cont} ${nr_cont_int} ${old_container} ${old_container_int}"
+                      sh "echo ${nr_cont} ${old_container} "
                       if ( nr_cont_int != 1)
                         {
                         if ( old_container_int != 0)
