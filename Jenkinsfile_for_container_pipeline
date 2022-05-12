@@ -29,9 +29,11 @@ stages {
             steps 
                 {
                 // Get only Dockerfile from GitHub repository
-                git init
-                git fetch "https://github.com/hluci93/Config_Files"
-                git checkout FETCH_HEAD -- Dockerfile
+               script{
+                      git init
+                      git fetch "https://github.com/hluci93/Config_Files"
+                      git checkout FETCH_HEAD -- Dockerfile
+                     }
                 }
         }
   stage("Pull Artifact")
