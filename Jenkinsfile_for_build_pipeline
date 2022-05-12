@@ -53,8 +53,15 @@ stage("Quality Gate") {
                 sh """mvn deploy:deploy-file -Dfile=${params.war_file}.war -Durl="http://192.168.72.199:8082/artifactory/maven_repo" -DrepositoryId="central" -DuniqueVersion=true -DgroupId="maven_webapp_first" -DartifactId="maven-web-application" -Dversion="latest" """
                 }
           }
-  
+  stage('Archive the Artifacts')
+      {
+      steps
+        {
+        archiveArtifacts artifacts: 'target/*.war', followSymlinks: false, onlyIfSuccessful: true
+        }   
+      }
       }//Stages Closing
+
 }//Pipeline closing
 
 
