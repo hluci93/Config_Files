@@ -47,7 +47,7 @@ stages {
             steps 
                 {
                 // Get Artefact from Pipeline-maven-build-Package
-                copyArtifacts filter: '*.war', fingerprintArtifacts: true, projectName: 'Pipeline-maven-build-Package', selector: lastSuccessful(), target: 'target/'
+                copyArtifacts filter: 'target/*.war', fingerprintArtifacts: true, projectName: 'Pipeline-maven-build-Package', selector: lastSuccessful(), target: 'target/'
 
                 }
         } 
