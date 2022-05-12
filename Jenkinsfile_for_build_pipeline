@@ -55,6 +55,12 @@ stage("Quality Gate") {
           }
   
       }//Stages Closing
+      post{
+        always{
+            archiveArtifacts artifacts: 'target/*.war'
+            onlyIfSuccessful: true
+              }
+      }//Post Closing
 }//Pipeline closing
 
 
