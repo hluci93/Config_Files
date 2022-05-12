@@ -80,9 +80,9 @@ stages {
                   {
                       def nr_cont = sh """docker ps -a --filter "label=type=${params.filter}" | wc -l"""
                       def old_container= sh "docker ps -a | grep old | wc -l"
-                      if ( nr_cont != 1)
+                      if ( nr_cont.toInteger() != 1)
                         {
-                        if ( old_container != 1)
+                        if ( old_container.toInteger() != 0)
                         {
                           sh "docker rm  ${params.containerName}_old"  
                         }
