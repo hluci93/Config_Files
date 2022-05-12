@@ -24,15 +24,19 @@ pipeline {
 
 stages {
 
+  stage('Clean workspace') {
+              deleteDir()
+              sh 'ls -lah'
+                        }
   stage("Git-Checkout")
         {
             steps 
                 {
                 // Get only Dockerfile from GitHub repository
                script{
-                      git init
-                      git fetch "https://github.com/hluci93/Config_Files"
-                      git checkout FETCH_HEAD -- Dockerfile
+                      sh 'git init'
+                      sh 'git fetch "https://github.com/hluci93/Config_Files"'
+                      sh 'git checkout FETCH_HEAD -- Dockerfile'
                      }
                 }
         }
