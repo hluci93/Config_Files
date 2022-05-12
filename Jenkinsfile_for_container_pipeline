@@ -48,17 +48,10 @@ stages {
                 {
                 // Get Artefact from Artifactory
                 //copyArtifacts filter: '*.war', fingerprintArtifacts: true, projectName: 'Pipeline-maven-build-Package', selector: lastSuccessful(), target: '/target/'
-                rtDownload(
-                    serverId: 'ArtifactoryServer',
-                    spec: '''{
-                      "files": [
-                             {
-                              "pattern": "maven-repo/maven_webapp_first/maven-web-application/latest/maven-web-application-latest.war",
-                              "target": "target/"
-                             }                 
-                              ]
-                          }'''
-                )
+               withCredentials([usernamePassword(credentialsId: 'Artifactory_Hub', passwordVariable: 'art_passwd', usernameVariable: 'art_user')])
+               {
+               curl -sSf -u "${env.art_user}:${env.art_passwd}" -O 'http://192.168.72.199:443/artifactory/maven_repo/maven_webapp_first/maven-web-application/latest/maven-web-application-latest.war'
+               }
                 }
         } 
  
