@@ -78,10 +78,10 @@ stages {
                 //Check and deploy container
                 script
                   {
-                      def nr_cont = sh """docker ps -a --filter "label=type=${params.filter}" | wc -l"""
-                      def old_container= sh "docker ps -a | grep old | wc -l"
-                      Integer nr_cont_int = nr_cont as Integer
-                      Integer old_container_int = old_container as Integer
+                      def nr_cont = sh (script: """docker ps -a --filter "label=type=${params.filter}" | wc -l""", returnStdout: true )
+                      def old_container= sh (script: "docker ps -a | grep old | wc -l", returnStdout: true)
+                     // Integer nr_cont_int = nr_cont as Integer
+                      //Integer old_container_int = old_container as Integer
                       sh "echo ${nr_cont} ${nr_cont_int} ${old_container} ${old_container_int}"
                       if ( nr_cont_int != 1)
                         {
