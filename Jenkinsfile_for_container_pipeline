@@ -46,8 +46,19 @@ stages {
         {
             steps 
                 {
-                // Get Artifact from Build Pipeline Project
-                copyArtifacts filter: '*.war', fingerprintArtifacts: true, projectName: 'Pipeline-maven-build-Package', selector: lastSuccessful(), target: '/target/'
+                // Get Artefact from Artifactory
+                //copyArtifacts filter: '*.war', fingerprintArtifacts: true, projectName: 'Pipeline-maven-build-Package', selector: lastSuccessful(), target: '/target/'
+                rtDownload(
+                    serverId: 'ArtifactoryServer',
+                    spec: '''{
+                      "files": [
+                             {
+                              "pattern": "maven-repo/maven_webapp_first/maven-web-application/latest/maven-web-application-latest.war",
+                              "target": "target/"
+                             }                 
+                              ]
+                          }'''
+                )
                 }
         } 
  
