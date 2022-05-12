@@ -80,18 +80,19 @@ stages {
                   {
                       def nr_cont = sh """docker ps -a --filter "label=type=${params.filter}" | wc -l"""
                       def old_container= sh "docker ps -a | grep old | wc -l"
-                      if ( nr_cont != 1){
-                        if ( old_container !=0)
+                      if ( !nr_cont.equals(1))
+                        {
+                        if ( !old_container.equals(0))
                         {
                           sh "docker rm  ${params.containerName}_old"  
                         }
                         sh "docker stop ${params.containerName}"
                         sh "docker rename  ${params.containerName} ${params.containerName}_old"
-                  }
-                  else
-                  {
-                sh """docker run -d -p ${params.EXPOSED_PORT}:8080 --name ${params.containerName} ${params.imageName}:${BUILD_NUMBER}"""               
-                  }
+                        }
+                      else
+                         {
+                        sh """docker run -d -p ${params.EXPOSED_PORT}:8080 --name ${params.containerName} ${params.imageName}:${BUILD_NUMBER}"""               
+                         }
                 }
         }
         }
