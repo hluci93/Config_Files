@@ -74,9 +74,9 @@ stages {
                      // Integer nr_cont_int = nr_cont as Integer
                       //Integer old_container_int = old_container as Integer
                       sh "echo ${nr_cont} ${old_container} "
-                      if ( nr_cont_int != 1)
+                      if ( nr_cont != 1)
                         {
-                        if ( old_container_int != 0)
+                        if ( old_container != 0)
                         {
                           sh "docker rm  ${params.containerName}_old"  
                         }
