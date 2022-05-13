@@ -1,0 +1,14 @@
+#!/bin/bash
+
+nr_cont = `docker ps -a --filter label=type=$1 | wc -l`
+old_container = `docker ps -a | grep old | wc -l`
+
+if [ $nr_cont != 1 ]
+then
+    if [ $old_container != 0 ]
+        then
+            docker rm  $2_old
+        fi  
+    docker stop $2
+    docker rename  $2 $2_old
+fi
