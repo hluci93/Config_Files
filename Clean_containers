@@ -1,7 +1,7 @@
 #!/bin/bash
 
-nr_cont = `docker ps -a --filter label=type=$1 | wc -l`
-old_container = `docker ps -a | grep old | wc -l`
+nr_cont=`docker ps -a --filter label=type=$1 | wc -l`
+old_container=`docker ps -a | grep old | wc -l`
 
 if [ $nr_cont != 1 ]
 then
