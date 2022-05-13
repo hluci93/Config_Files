@@ -83,7 +83,7 @@ stage("Cleanup")
           steps
             { //CLEANUP
                  echo 'Clean system of old images'
-                 sh """docker image prune -f --filter label=type=${params.filter}"""
+                 sh """docker image prune -f -a --filter label=type=${params.filter}"""
                 }            
                 
         }
