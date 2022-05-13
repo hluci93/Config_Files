@@ -69,16 +69,13 @@ stages {
                 //Check and deploy container
                 script
                   {
-                      def nr_cont = sh (script: """ #!/bin/bash; docker ps -a --filter "label=type=${params.filter}" | wc -l """, returnStdout: true )
-                      def old_container= sh (script: """ #!/bin/bash; docker ps -a | grep old | wc -l """, returnStdout: true)
-                      cont= nr_cont
-                      old=old_container
-                     // Integer nr_cont_int = nr_cont as Integer
-                      //Integer old_container_int = old_container as Integer
-                      //sh "echo ${nr_cont} ${old_container} "
-                      if ( cont != 1)
+                      //def nr_cont = sh (script: """ #!/bin/bash; docker ps -a --filter "label=type=${params.filter}" | wc -l """, returnStdout: true )
+                      //def old_container= sh (script: """ #!/bin/bash; docker ps -a | grep old | wc -l """, returnStdout: true)
+                      def nr_cont = 1
+                      def old_container = 0 
+                      if ( nr_cont != 1)
                         {
-                        if ( old != 0)
+                        if ( old_container != 0)
                         {
                           sh "docker rm  ${params.containerName}_old"  
                         }
