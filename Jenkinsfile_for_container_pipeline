@@ -69,7 +69,7 @@ stages {
                 //Check and deploy container
                 script
                   {
-                      def nr_cont = sh (script: ' #!/bin/bash; docker ps -a --filter "label=type=${params.filter}" | wc -l ', returnStdout: true )
+                      def nr_cont = sh (script: ' #!/bin/bash; docker ps -a --filter \"label=type=${params.filter}\" | wc -l ', returnStdout: true )
                       def old_container= sh (script: ' #!/bin/bash; docker ps -a | grep old | wc -l ', returnStdout: true)
                       if ( nr_cont != 1)
                         {
